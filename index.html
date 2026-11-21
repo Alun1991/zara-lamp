@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hello, I'm Zara — lamp study</title>
+  <style>
+    :root{--blue:#2524c9;--paper:#f9f8ed;--muted:#c6c4f3}
+    *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--blue)}
+    body{font-family:Georgia,'Times New Roman',serif}button{font:inherit}
+    .stage{position:relative;width:100vw;height:100vh;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 25% 48%,#3937d7 0%,#2928cc 50%,#2423be 100%)}
+    svg{position:absolute;width:100%;height:100%;inset:0;display:block}
+    #grain{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.18;mix-blend-mode:screen;z-index:5}
+    .intro{position:absolute;left:11.2%;top:17.8%;color:var(--paper);font:italic clamp(15px,1.35vw,28px) 'Comic Sans MS','Bradley Hand',cursive;letter-spacing:.04em;transform:rotate(-2deg);z-index:4}
+    nav{position:absolute;left:7.6%;top:26%;width:37%;z-index:4;display:flex;flex-direction:column;gap:clamp(8px,1.25vh,24px)}
+    .item{all:unset;display:flex;align-items:center;gap:2.9%;height:clamp(56px,11.3vh,145px);width:max-content;max-width:100%;cursor:pointer;color:var(--muted);transition:color .45s ease,transform .45s cubic-bezier(.2,.7,.2,1);position:relative}
+    .item:hover,.item.active{color:var(--paper);transform:translateX(5px)}
+    .roman{display:grid;place-items:center;flex:0 0 clamp(23px,2.1vw,43px);height:clamp(23px,2.1vw,43px);border:2px solid currentColor;border-radius:50%;font:bold clamp(10px,.9vw,19px) Georgia,serif;font-style:italic;line-height:1}
+    .item.active .roman{background:var(--paper);color:var(--blue)}
+    .word{position:relative;font-weight:700;font-size:clamp(42px,5.05vw,108px);letter-spacing:-.055em;line-height:1.02;white-space:nowrap;padding:.05em .13em .11em}
+    .item.active .word:before{content:"";position:absolute;z-index:-1;inset:0 -.04em -.04em;transform:rotate(-2deg);border-radius:45% 48% 43% 51% / 53% 41% 55% 47%;background:var(--paper)}
+    .item.active .word{color:var(--blue)}
+    .star{fill:var(--paper);opacity:.95}.scratch{fill:none;stroke:var(--blue);stroke-width:4;stroke-linecap:round}
+    .ink{fill:var(--paper);stroke:var(--paper);stroke-linecap:round;stroke-linejoin:round}.outline{fill:none;stroke:var(--paper);stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
+    .blue-line{fill:none;stroke:var(--blue);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+    #beam{opacity:.34;transition:opacity .5s}#beam-glow{opacity:.55}
+    @media(max-width:700px){.stage{height:100dvh}nav{left:7%;top:37%;width:75%;gap:1.5vh}.item{height:8vh}.word{font-size:clamp(35px,9vw,70px)}.intro{left:10%;top:29%;font-size:16px}#scene{width:165%;height:100%;left:-22%}}
+    @media(prefers-reduced-motion:reduce){.item,#beam{transition:none}}
+  </style>
+</head>
+<body>
+<main class="stage" aria-label="Interactive illustrated lamp menu">
+  <svg id="scene" viewBox="0 0 2048 1199" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="light" x1="1" y1=".15" x2="0" y2=".85"><stop stop-color="#dedcfb" stop-opacity=".55"/><stop offset=".55" stop-color="#b8b7ff" stop-opacity=".5"/><stop offset="1" stop-color="#a9a7ff" stop-opacity=".08"/></linearGradient>
+      <linearGradient id="soft" x1="1" x2="0"><stop stop-color="#f8f7ff" stop-opacity=".28"/><stop offset="1" stop-color="#f8f7ff" stop-opacity="0"/></linearGradient>
+      <filter id="fuzzy"><feGaussianBlur stdDeviation="27"/></filter>
+      <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="11" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"/></filter>
+      <pattern id="lampHatch" width="6" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-24)"><path d="M1 0V5" stroke="#f9f8ed" stroke-width="1" opacity=".35"/></pattern>
+      <pattern id="speckle" width="31" height="29" patternUnits="userSpaceOnUse"><path d="M3 4l1 2 M13 18l2 1 M26 7l-1 2 M6 25l2 -1 M20 26v2 M22 15l2 -1" stroke="#2524c9" stroke-width="1.5"/></pattern>
+      <pattern id="dots" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="3" r=".8" fill="#2928cb" opacity=".75"/><circle cx="6" cy="7" r=".55" fill="#2928cb" opacity=".5"/></pattern>
+    </defs>
+    <path id="beam-glow" d="M1307 286 L-70 689 L-50 1175 L1437 427 Z" fill="url(#soft)" filter="url(#fuzzy)"/>
+    <path id="beam" d="M1307 286 L-70 692 L-50 1162 L1437 427 Z" fill="url(#light)"/>
+    <path d="M976 1199 Q1160 934 1426 931 Q1770 890 2048 981 L2048 1199Z" fill="#f8f8f0"/>
+    <path d="M976 1199 Q1160 934 1426 931 Q1770 890 2048 981 L2048 1199Z" fill="url(#dots)" opacity=".35"/>
+    <path class="blue-line" d="M1150 1197 Q1230 1094 1413 1016 M1251 1205 Q1374 1106 1528 1079 M1799 1069 Q1945 1065 2059 1090 M1660 1169 Q1847 1143 2059 1190"/>
+    <g class="star"><path d="M1486 7 Q1480 21 1484 47 M1465 28 L1504 28" stroke="#f8f8ef" stroke-width="7" stroke-linecap="round"/><circle cx="1774" cy="171" r="53"/><circle cx="1065" cy="155" r="5"/><circle cx="1924" cy="281" r="5"/></g>
+    <circle cx="1774" cy="171" r="53" fill="url(#dots)" opacity=".25"/>
+    <g id="lamp" filter="url(#rough)">
+      <g id="base">
+        <path fill="var(--blue)" stroke="var(--paper)" stroke-width="6" d="M1415 853 C1430 817 1684 815 1714 850 L1717 901 C1660 945 1451 941 1415 903Z"/>
+        <ellipse cx="1565" cy="851" rx="149" ry="30" class="ink"/>
+        <path class="outline" stroke-width="3" d="M1427 871 Q1557 910 1706 871 M1428 882 Q1557 920 1707 881 M1430 896 Q1557 930 1704 894"/>
+        <path class="blue-line" stroke-width="3" d="M1438 850 Q1485 827 1528 834 M1461 860 Q1545 838 1675 850 M1460 866 Q1586 885 1690 857"/>
+        <path class="ink" d="M1542 795 Q1575 806 1608 794 L1610 827 Q1576 844 1538 827Z"/>
+        <path class="blue-line" stroke-width="4" d="M1542 803 Q1575 815 1608 803"/>
+      </g>
+      <g id="lower-arm"></g>
+      <g id="upper-arm"></g>
+      <g id="elbow"><circle class="ink" r="29"/><circle fill="var(--blue)" r="15"/><path class="outline" stroke-width="3" d="M-8 -9 L6 -11 L12 0 L5 10 L-8 8 L-12 -1Z"/></g>
+      <g id="head">
+        <path class="ink" d="M-284 -28 C-239 -51 -151 -51 -80 -29 C-33 -15 -25 15 -34 55 C-44 103 -83 164 -148 217 L-284 -28Z"/>
+        <path class="blue-line" stroke-width="4" d="M-255 -33 C-194 -50 -123 -43 -80 -25 M-170 -29 Q-151 -25 -138 -17 M-38 29 Q-31 69 -71 119 M-48 34 Q-43 74 -85 133 M-60 42 Q-56 89 -99 148 M-75 57 Q-73 105 -115 164"/>
+        <ellipse cx="-207" cy="98" rx="67" ry="139" transform="rotate(-26 -207 98)" fill="var(--blue)" stroke="var(--paper)" stroke-width="6"/>
+        <ellipse cx="-207" cy="98" rx="61" ry="132" transform="rotate(-26 -207 98)" fill="url(#lampHatch)" stroke="var(--paper)" stroke-opacity=".55" stroke-width="2"/>
+        <ellipse cx="-195" cy="86" rx="38" ry="49" transform="rotate(-26 -195 86)" class="ink"/>
+        <path class="blue-line" stroke-width="3" d="M-211 53 Q-231 75 -222 94 M-200 47 Q-210 51 -214 61"/>
+        <path class="outline" stroke-width="2" opacity=".7" d="M-278 -13 Q-288 47 -246 124 Q-213 190 -163 213 M-269 -7 Q-281 53 -240 124"/>
+        <path d="M-284 -28 C-239 -51 -151 -51 -80 -29 C-33 -15 -25 15 -34 55 C-44 103 -83 164 -148 217Z" fill="url(#speckle)" opacity=".45"/>
+        <path class="ink" d="M-41 -7 L-10 -20 L0 -4 L-31 16Z"/>
+        <circle class="ink" r="25"/><circle fill="var(--blue)" r="13"/><path class="outline" stroke-width="3" d="M-7 -8 L5 -10 L10 1 L3 9 L-8 6 L-10 -2Z"/>
+      </g>
+    </g>
+  </svg>
+  <div class="intro">hello, i'm zara</div>
+  <nav aria-label="Sections">
+    <button class="item" data-index="0"><span class="roman">i</span><span class="word">writings</span></button>
+    <button class="item" data-index="1"><span class="roman">ii</span><span class="word">top posts</span></button>
+    <button class="item" data-index="2"><span class="roman">iii</span><span class="word">journey</span></button>
+    <button class="item active" data-index="3"><span class="roman">iv</span><span class="word">recs</span></button>
+    <button class="item" data-index="4"><span class="roman">v</span><span class="word">contact</span></button>
+  </nav>
+  <canvas id="grain" aria-hidden="true"></canvas>
+</main>
+<script>
+  const buttons = [...document.querySelectorAll('.item')];
+  const beam = document.getElementById('beam'), glow = document.getElementById('beam-glow');
+  const head = document.getElementById('head'), upper = document.getElementById('upper-arm');
+  const lower = document.getElementById('lower-arm'), elbow = document.getElementById('elbow');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const base = {x:1575, y:800}, lowerLength = 324, upperLength = 344;
+  let active = 3, target = 3, pose = 3, velocity = 0, lastTime = 0, headAngle = 0, headVelocity = 0;
+  let pointerInside = false;
+  const RAD = 180 / Math.PI;
+  function armMarkup(length, offset) {
+    let coils = '';
+    const start = 64, end = length - 59, n = 12;
+    for(let i=0; i<n; i++) {
+      const x = start + (end-start)*i/n;
+      coils += `M${x} ${offset} c-4 -15 13 -20 16 -7 c4 15 -12 23 -17 10`;
+    }
+    return `<path d="M7 -12 L${length-10} -12 L${length-10} 9 L7 9Z" fill="var(--paper)"/>
+      <path d="M12 -7 L${length-15} -7 M15 7 L${length-16} 7" class="blue-line" stroke-width="2.4"/>
+      <path d="M25 -3 L${length-25} -3" stroke="var(--blue)" opacity=".35" stroke-width="1.5"/>
+      <path d="${coils}" fill="none" stroke="var(--paper)" stroke-width="3.7" stroke-linecap="round"/>
+      <path d="M32 ${offset}L64 ${offset} M${end+10} ${offset}L${length-26} ${offset}" class="outline" stroke-width="3"/>`;
+  }
+  lower.innerHTML = armMarkup(lowerLength, 30);
+  upper.innerHTML = armMarkup(upperLength, -31);
+  function setTarget(i) { target = i; if(reduced){pose=i; render(0);} }
+  function select(i) {
+    active=i; setTarget(i);
+    buttons.forEach((b,n)=>{b.classList.toggle('active',n===i);b.setAttribute('aria-pressed',n===i?'true':'false')});
+  }
+  buttons.forEach((b,i)=>{
+    b.addEventListener('pointerenter',()=>{pointerInside=true;setTarget(i)});
+    b.addEventListener('focus',()=>setTarget(i));
+    b.addEventListener('click',()=>select(i));
+  });
+  document.querySelector('nav').addEventListener('pointerleave',()=>{pointerInside=false;setTarget(active)});
+  document.querySelector('nav').addEventListener('focusout',e=>{if(!e.currentTarget.contains(e.relatedTarget)&&!pointerInside)setTarget(active)});
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+      e.preventDefault();const i=(active+(e.key==='ArrowDown'?1:4))%5;select(i);buttons[i].focus();
+    }
+  });
+  // A shared two-link skeleton keeps every joint welded throughout movement.
+  function solveJoint(end) {
+    const dx=end.x-base.x, dy=end.y-base.y, d=Math.hypot(dx,dy);
+    const a=(lowerLength**2-upperLength**2+d*d)/(2*d);
+    const h=Math.sqrt(Math.max(0,lowerLength**2-a*a));
+    return {x:base.x+a*dx/d-h*dy/d, y:base.y+a*dy/d+h*dx/d};
+  }
+  function render(time, dt=1/60) {
+    const breath = reduced ? 0 : Math.sin(time*.00065)*.65;
+    const end={x:1545+(pose-3)*7, y:247-(pose-3)*6+breath};
+    const joint=solveJoint(end);
+    lower.setAttribute('transform',`translate(${base.x} ${base.y}) rotate(${Math.atan2(joint.y-base.y,joint.x-base.x)*RAD})`);
+    upper.setAttribute('transform',`translate(${joint.x} ${joint.y}) rotate(${Math.atan2(end.y-joint.y,end.x-joint.x)*RAD})`);
+    elbow.setAttribute('transform',`translate(${joint.x} ${joint.y})`);
+    const menuY=370+pose*153;
+    const desired=Math.atan2(menuY-(end.y+98),350-(end.x-207))*RAD-154.3;
+    if(reduced)headAngle=desired;
+    else {
+      // Exact critically damped response: continuous velocity, no bouncing or snapping.
+      const omega=7.5, error=headAngle-desired, c=headVelocity+omega*error, decay=Math.exp(-omega*dt);
+      headAngle=desired+(error+c*dt)*decay;
+      headVelocity=(headVelocity-omega*c*dt)*decay;
+    }
+    const transform=`translate(${end.x} ${end.y}) rotate(${headAngle})`;
+    head.setAttribute('transform',transform);
+    // Light is expressed in the same local coordinates as the shade.
+    const path='M-279 -10 L-1790 382 L-1590 1120 L-151 216Z';
+    for(const light of [beam,glow]){light.setAttribute('d',path);light.setAttribute('transform',transform)}
+  }
+  function animate(time) {
+    const dt=lastTime?Math.min((time-lastTime)/1000,.04):1/60;lastTime=time;
+    const omega=6.5, error=pose-target, c=velocity+omega*error, decay=Math.exp(-omega*dt);
+    pose=target+(error+c*dt)*decay;
+    velocity=(velocity-omega*c*dt)*decay;
+    render(time,dt);requestAnimationFrame(animate);
+  }
+  render(0);
+  if(!reduced)requestAnimationFrame(animate);
+  document.addEventListener('visibilitychange',()=>{lastTime=0});
+  // Static fine print grain avoids the former flickering, enlarged noise pixels.
+  const grain=document.getElementById('grain'),ctx=grain.getContext('2d');
+  function drawGrain(){
+    const dpr=Math.min(devicePixelRatio||1,1.5);
+    grain.width=Math.round(innerWidth*dpr);grain.height=Math.round(innerHeight*dpr);
+    const d=ctx.createImageData(grain.width,grain.height);
+    let seed=83971;
+    for(let i=0;i<d.data.length;i+=4){seed=(Math.imul(seed,1664525)+1013904223)>>>0;const v=seed>>>24;d.data[i]=d.data[i+1]=d.data[i+2]=v;d.data[i+3]=v>190?110:18}
+    ctx.putImageData(d,0,0);
+  }
+  drawGrain();window.addEventListener('resize',drawGrain);
+  window.lampStudy={solveJoint,base,lowerLength,upperLength,setTarget,get pose(){return pose},get headAngle(){return headAngle}};
+</script>
+</body>
+</html>
